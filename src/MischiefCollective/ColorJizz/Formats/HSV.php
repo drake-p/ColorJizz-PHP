@@ -149,12 +149,9 @@ class HSV extends ColorJizz
     {
         $h = $this->hue;
         $l = (2 - $this->saturation / 100) * $this->value / 2;
-
-        try {
-            $s = $this->saturation * $this->value / ($l < 50 ? $l * 2 : 200 - $l * 2);
-        } catch(\Exception $e) {
-            $s = 0;
-        }
+        $s = ($l > 0 && $l < 100)
+            ? $this->saturation * $this->value / ($l < 50 ? $l * 2 : 200 - $l * 2)
+            : 0;
 
         return new HSL($h, $s, $l);
     }
